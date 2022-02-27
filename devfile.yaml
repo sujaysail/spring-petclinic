@@ -7,15 +7,24 @@ starterProjects:
       remotes:
       origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
 components:
-  - id: redhat/java11/latest
-    type: chePlugin
-  - id: redhat/dependency-analytics/latest
-    type: chePlugin
-  - name: maven
-    container:
+  - chePlugin
+    regustry:
+      id: redhat/java11/latest
+  - chePlugin
+    registry:
+      id: redhat/dependency-analytics/latest
+  - container:
+      name: maven
       image: 'registry.redhat.io/codeready-workspaces/plugin-java11-rhel8@sha256:641e223f5efbc32bab3461aa000e3a50a5dcca063331322158d1c959129ffd99'
       mountSources: true
-      env:
+      memoryLimit: "768M"
+      volumeMounts:
+      - name: m2
+        path: /home/jboss/.m2
+      endpoints:
+      - name: 8080-tcp
+        port: 8080
+        env:
         - value: '-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/jboss'
           name: JAVA_OPTS
         - value: $(JAVA_OPTS)
@@ -24,10 +33,10 @@ components:
           name: SPRING_PROFILES_ACTIVE
         - value: 'jdbc:mysql://mysql-workspace:3306/petclinic'
           name: MYSQL_URL
-  - name: mysql
-    container:
-      image: registry.redhat.io/rhel8/mysql-80@sha256:55c08482a20b653dab4d78fad77b5a459e04258135e19fb14efbd1072c786fd3
-      memoryLimit: 512Mi
+  - container:
+      name: mysql
+      image: 'registry.redhat.io/rhel8/mysql-80@sha256:55c08482a20b653dab4d78fad77b5a459e04258135e19fb14efbd1072c786fd3'
+      memoryLimit: "512M"
       env:
         - name: DATABASE_SERVICE_NAME
           value: mysql-workspace
