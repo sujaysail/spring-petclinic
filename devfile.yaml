@@ -91,17 +91,4 @@ commands:
         workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: 'mvn fabric8:deploy -Popenshift -DskipTests'
         component: maven
-  - id: debugremote
-    exec:
-        referenceContent: |
-          {
-           "version": "0.2.0",
-           "configurations": [
-             {
-               "type": "java",
-               "name": "Debug (Attach) - Remote",
-               "request": "attach",
-               "hostName": "localhost",
-               "port": 5005
-             }]
-           }
+ 
