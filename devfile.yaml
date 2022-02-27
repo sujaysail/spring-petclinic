@@ -5,7 +5,7 @@ starterProjects:
   - name: springpetclinic
     git:
       remotes:
-        origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
+        origin: 'https://github.com/sujaysail/spring-petclinic.git'
 components:
   - name: maven
     container:
