@@ -27,7 +27,6 @@ components:
           name: SPRING_PROFILES_ACTIVE
         - value: 'jdbc:mysql://mysql-workspace:3306/petclinic'
           name: MYSQL_URL
-        - name: m2
   - name: m2
     volume:
       size: 3Gi  
