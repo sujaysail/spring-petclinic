@@ -17,7 +17,7 @@ components:
         path: /home/jboss/.m2
       endpoints:
       - name: 8080-tcp
-        port: 8080
+        targetPort: 8080
         env:
         - value: '-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/jboss'
           name: JAVA_OPTS
@@ -50,7 +50,7 @@ components:
           path: /var/lib/mysql
       endpoints:
         - name: mysql-workspace
-          port: 3306
+          targetPort: 3306
           attributes:
             discoverable: 'true'
             public: 'false'
