@@ -1,62 +1,54 @@
 schemaVersion: 2.0.0
 metadata:
-  generateName: spring-petclinic-
-projects:
-  - name: spring-petclinic
-    source:
-      type: git
-      location: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
-      branch: main
+  name: spring-petclinic-
+starterProjects:
+  - name: springpetclinic
+    git:
+      remotes:
+      origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
 components:
   - id: redhat/java11/latest
     type: chePlugin
   - id: redhat/dependency-analytics/latest
     type: chePlugin
-  - mountSources: true
-    endpoints:
-      - name: 8080-tcp
-        port: 8080
-    memoryLimit: 768Mi
-    type: dockerimage
-    volumes:
-      - name: m2
-        containerPath: /home/jboss/.m2
-    alias: maven
-    image: 'registry.redhat.io/codeready-workspaces/plugin-java11-rhel8@sha256:641e223f5efbc32bab3461aa000e3a50a5dcca063331322158d1c959129ffd99'
-    env:
-      - value: '-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/jboss'
-        name: JAVA_OPTS
-      - value: $(JAVA_OPTS)
-        name: MAVEN_OPTS
-      - value: 'mysql'
-        name: SPRING_PROFILES_ACTIVE
-      - value: 'jdbc:mysql://mysql-workspace:3306/petclinic'
-        name: MYSQL_URL
-  - type: dockerimage
-    alias: mysql
-    image: >-
+  - name: maven
+    container:
+      image: 'registry.redhat.io/codeready-workspaces/plugin-java11-rhel8@sha256:641e223f5efbc32bab3461aa000e3a50a5dcca063331322158d1c959129ffd99'
+      mountSources: true
+      env:
+        - value: '-XX:MaxRAMPercentage=50.0 -XX:+UseParallelGC -XX:MinHeapFreeRatio=10 -XX:MaxHeapFreeRatio=20 -XX:GCTimeRatio=4 -XX:AdaptiveSizePolicyWeight=90 -Dsun.zip.disableMemoryMapping=true -Xms20m -Djava.security.egd=file:/dev/./urandom -Duser.home=/home/jboss'
+          name: JAVA_OPTS
+        - value: $(JAVA_OPTS)
+          name: MAVEN_OPTS
+        - value: 'mysql'
+          name: SPRING_PROFILES_ACTIVE
+        - value: 'jdbc:mysql://mysql-workspace:3306/petclinic'
+          name: MYSQL_URL
+  - name: mysql
+    container:
+      image: >-
       registry.redhat.io/rhel8/mysql-80@sha256:55c08482a20b653dab4d78fad77b5a459e04258135e19fb14efbd1072c786fd3
-    memoryLimit: 512Mi
-    env:
-      - name: DATABASE_SERVICE_NAME
-        value: mysql-workspace
-      - name: MYSQL_USER
-        value: petclinic
-      - name: MYSQL_PASSWORD
-        value: petclinic
-      - name: MYSQL_ROOT_PASSWORD
-        value: petclinic
-      - name: MYSQL_DATABASE
-        value: petclinic
-    volumes:
-      - name: mysql-storage
-        containerPath: /var/lib/mysql
-    endpoints:
-      - name: mysql-workspace
-        port: 3306
-        attributes:
-          discoverable: 'true'
-          public: 'false'
+      memoryLimit: 512Mi
+      env:
+        - name: DATABASE_SERVICE_NAME
+          value: mysql-workspace
+        - name: MYSQL_USER
+          value: petclinic
+        - name: MYSQL_PASSWORD
+          value: petclinic
+        - name: MYSQL_ROOT_PASSWORD
+          value: petclinic
+        - name: MYSQL_DATABASE
+          value: petclinic
+      volumeMounts:
+        - name: mysql-storage
+          path: /var/lib/mysql
+      endpoints:
+        - name: mysql-workspace
+          port: 3306
+          attributes:
+            discoverable: 'true'
+            public: 'false'
 commands:
   - name: 1. Build
     actions:
