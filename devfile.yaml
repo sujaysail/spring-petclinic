@@ -5,9 +5,11 @@ starterProjects:
   - name: springpetclinic
     git:
       remotes:
-        origin: 'https://github.com/sujaysail/spring-petclinic.git'
+        origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
 components:
   - name: maven
+    attributes:
+      tool: console-import
     container:
       image: 'registry.redhat.io/codeready-workspaces/plugin-java11-rhel8@sha256:641e223f5efbc32bab3461aa000e3a50a5dcca063331322158d1c959129ffd99'
       mountSources: true
