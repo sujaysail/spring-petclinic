@@ -54,6 +54,9 @@ components:
           attributes:
             discoverable: 'true'
             public: 'false'
+  - name:  mysql-storage
+    volume:
+      size: 3Gi          
 commands:
   - id: build
     exec:
