@@ -65,19 +65,19 @@ commands:
         workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} spring-boot:run'
         component: maven
-  - id: debug mode
+  - id: debug
     exec:
         workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: |-
           mvn  -Duser.home=${HOME} spring-boot:run -Dspring-boot.run.jvmArguments="-Xdebug
            -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"
         component: maven
-  - id: run tests
+  - id:  test
     exec:
         workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} verify'
         component: maven
-  - id: log into deployment cluster
+  - id: login
     exec:
         workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: |
@@ -86,12 +86,12 @@ commands:
           echo "you must run 'oc login ...' in the maven terminal."
           echo
         component: maven
-  - id: deploy to openShift
+  - id: deploy
     exec:
         workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: 'mvn fabric8:deploy -Popenshift -DskipTests'
         component: maven
-  - id: debug remote java application
+  - id: debugremote
     exec:
         referenceContent: |
           {
