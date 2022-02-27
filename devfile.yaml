@@ -8,7 +8,7 @@ starterProjects:
       origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
 components:
   - chePlugin
-    regustry:
+    registry:
       id: redhat/java11/latest
   - chePlugin
     registry:
