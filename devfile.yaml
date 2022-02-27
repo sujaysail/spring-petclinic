@@ -55,40 +55,40 @@ components:
             discoverable: 'true'
             public: 'false'
 commands:
-  - id: 1. Build
+  - id: Build
     exec:
-        workDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
+        workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} -DskipTests clean install'
         component: maven
-  - id: 2. Run
+  - id: Run
     exec:
-        workDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
+        workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} spring-boot:run'
         component: maven
-  - id: 3. Run in debug mode
+  - id: Debug mode
     exec:
-        workDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
+        workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: |-
           mvn  -Duser.home=${HOME} spring-boot:run -Dspring-boot.run.jvmArguments="-Xdebug
            -Xrunjdwp:transport=dt_socket,server=y,suspend=y,address=5005"
         component: maven
-  - id: 4. Run tests
+  - id: Run tests
     exec:
-        workDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
+        workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: 'MAVEN_OPTS="-Xmx200m" && mvn -Duser.home=${HOME} verify'
         component: maven
-  - id: 5. Log into deployment cluster
+  - id: Log into deployment cluster
     exec:
-        workDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
+        workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: |
           echo
           echo "Before you can deploy this application to an openshift cluster,"
           echo "you must run 'oc login ...' in the maven terminal."
           echo
         component: maven
-  - id: 6. Deploy to OpenShift
+  - id: Deploy to OpenShift
     exec:
-        workDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
+        workingDir: '${CHE_PROJECTS_ROOT}/spring-petclinic'
         commandLine: 'mvn fabric8:deploy -Popenshift -DskipTests'
         component: maven
   - id: Debug remote java application
