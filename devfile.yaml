@@ -7,10 +7,10 @@ starterProjects:
       remotes:
       origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
 components:
-  - chePlugin
+  - chePlugin:
     registry:
       id: redhat/java11/latest
-  - chePlugin
+  - chePlugin:
     registry:
       id: redhat/dependency-analytics/latest
   - container:
