@@ -5,16 +5,10 @@ starterProjects:
   - name: springpetclinic
     git:
       remotes:
-      origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
+        origin: 'https://github.com/redhat-developer-demos/spring-petclinic.git'
 components:
-  - chePlugin:
-    registry:
-      id: redhat/java11/latest
-  - chePlugin:
-    registry:
-      id: redhat/dependency-analytics/latest
-  - container:
-      name: maven
+  - name: maven
+    container:
       image: 'registry.redhat.io/codeready-workspaces/plugin-java11-rhel8@sha256:641e223f5efbc32bab3461aa000e3a50a5dcca063331322158d1c959129ffd99'
       mountSources: true
       memoryLimit: "768M"
@@ -33,8 +27,12 @@ components:
           name: SPRING_PROFILES_ACTIVE
         - value: 'jdbc:mysql://mysql-workspace:3306/petclinic'
           name: MYSQL_URL
-  - container:
-      name: mysql
+        - name: m2
+  - name: m2
+    volume:
+      size: 3Gi  
+  - name: mysql
+    container:
       image: 'registry.redhat.io/rhel8/mysql-80@sha256:55c08482a20b653dab4d78fad77b5a459e04258135e19fb14efbd1072c786fd3'
       memoryLimit: "512M"
       env:
